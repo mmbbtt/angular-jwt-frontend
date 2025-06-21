@@ -1,52 +1,202 @@
 <div class="container-fluid">
   <div class="login-container">
+    <!-- Header del login -->
     <div class="text-center mb-4">
+      <!-- Icono decorativo -->
+      <div class="login-icon mb-3">
+        <i class="fas fa-shield-alt fa-3x" style="color: #667eea; filter: drop-shadow(0 4px 8px rgba(102, 126, 234, 0.3));"></i>
+      </div>
+      
       <h2 class="mb-3">Iniciar Sesión</h2>
       <p class="text-muted">Accede a la API REST con JWT</p>
     </div>
     
+    <!-- Formulario -->
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <div class="mb-3">
-        <label for="userName" class="form-label">Usuario</label>
-        <input 
-          type="text" 
-          class="form-control" 
-          id="userName"
-          formControlName="userName"
-          [class.is-invalid]="submitted && f['userName'].errors"
-          placeholder="Ingresa tu usuario">
+      <!-- Campo Usuario -->
+      <div class="mb-4">
+        <label for="userName" class="form-label">
+          <i class="fas fa-user fa-sm"></i>
+          Usuario
+        </label>
+        <div class="input-group">
+          <input 
+            type="text" 
+            class="form-control" 
+            id="userName"
+            formControlName="userName"
+            [class.is-invalid]="submitted && f['userName'].errors"
+            placeholder="Ingresa tu usuario"
+            autocomplete="username">
+          <span class="input-group-text bg-transparent border-start-0" 
+                [class.text-success]="loginForm.get('userName')?.valid && loginForm.get('userName')?.touched"
+                [class.text-danger]="loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched">
+            <i class="fas fa-check" *ngIf="loginForm.get('userName')?.valid && loginForm.get('userName')?.touched"></i>
+            <i class="fas fa-times" *ngIf="loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched"></i>
+          </span>
+        </div>
         <div class="invalid-feedback" *ngIf="submitted && f['userName'].errors">
+          <i class="fas fa-exclamation-circle me-1"></i>
           <div *ngIf="f['userName'].errors['required']">El usuario es requerido</div>
         </div>
       </div>
       
-      <div class="mb-3">
-        <label for="password" class="form-label">Contraseña</label>
-        <input 
-          type="password" 
-          class="form-control" 
-          id="password"
-          formControlName="password"
-          [class.is-invalid]="submitted && f['password'].errors"
-          placeholder="Ingresa tu contraseña">
+      <!-- Campo Contraseña -->
+      <div class="mb-4">
+        <label for="password" class="form-label">
+          <i class="fas fa-lock fa-sm"></i>
+          Contraseña
+        </label>
+        <div class="input-group">
+          <input 
+            [type]="showPassword ? 'text' : 'password'" 
+            class="form-control" 
+            id="password"
+            formControlName="password"
+            [class.is-invalid]="submitted && f['password'].errors"
+            placeholder="Ingresa tu contraseña"
+            autocomplete="current-password">
+          <button 
+            class="btn btn-outline-secondary border-start-0" 
+            type="button"
+            (click)="togglePasswordVisibility()"
+            style="background: transparent;">
+            <i class="fas" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"></i>
+          </button>
+        </div>
         <div class="invalid-feedback" *ngIf="submitted && f['password'].errors">
+          <i class="fas fa-exclamation-circle me-1"></i>
           <div *ngIf="f['password'].errors['required']">La contraseña es requerida</div>
         </div>
       </div>
       
-      <div class="alert alert-danger" *ngIf="errorMessage">
-        {{ errorMessage }}
+      <!-- Mensaje de error -->
+      <div class="alert alert-danger d-flex align-items-center" *ngIf="errorMessage" role="alert">
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        <div>{{ errorMessage }}</div>
       </div>
       
-      <div class="d-grid">
+      <!-- Botón de submit -->
+      <div class="d-grid mb-3">
         <button 
           type="submit" 
           class="btn btn-custom btn-lg"
           [disabled]="loading">
           <span class="spinner-border spinner-border-sm me-2" *ngIf="loading"></span>
+          <i class="fas fa-sign-in-alt me-2" *ngIf="!loading"></i>
           {{ loading ? 'Iniciando sesión...' : 'Iniciar Sesión' }}
         </button>
       </div>
+      
+      <!-- Info adicional -->
+      <div class="text-center">
+        <small class="text-muted">
+          <i class="fas fa-info-circle me-1"></i>
+          Utiliza tus credenciales de acceso a la API
+        </small>
+      </div>
     </form>
+    
+    <!-- Decoración de fondo -->
+    <div class="login-decoration">
+      <div class="decoration-circle decoration-circle-1"></div>
+      <div class="decoration-circle decoration-circle-2"></div>
+      <div class="decoration-circle decoration-circle-3"></div>
+    </div>
   </div>
 </div>
+
+<!-- Estilos adicionales específicos del login -->
+<style>
+.login-icon {
+  position: relative;
+  z-index: 2;
+}
+
+.input-group-text {
+  border-left: none !important;
+  background: transparent !important;
+  border-color: #e2e8f0;
+}
+
+.input-group .form-control {
+  border-right: none;
+}
+
+.input-group .form-control:focus + .input-group-text {
+  border-color: #667eea;
+}
+
+.btn-outline-secondary {
+  border-color: #e2e8f0;
+  color: #718096;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #f7fafc;
+  border-color: #667eea;
+  color: #667eea;
+}
+
+.login-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.decoration-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  animation: float 6s ease-in-out infinite;
+}
+
+.decoration-circle-1 {
+  width: 120px;
+  height: 120px;
+  top: -60px;
+  right: -60px;
+  animation-delay: 0s;
+}
+
+.decoration-circle-2 {
+  width: 80px;
+  height: 80px;
+  bottom: -40px;
+  left: -40px;
+  animation-delay: 2s;
+}
+
+.decoration-circle-3 {
+  width: 60px;
+  height: 60px;
+  top: 50%;
+  right: -30px;
+  animation-delay: 4s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+  }
+}
+
+.login-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.form-control, .input-group-text, .btn-outline-secondary {
+  position: relative;
+  z-index: 1;
+}
+</style>
