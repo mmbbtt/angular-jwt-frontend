@@ -1,0 +1,52 @@
+<div class="container-fluid">
+  <div class="login-container">
+    <div class="text-center mb-4">
+      <h2 class="mb-3">Iniciar Sesión</h2>
+      <p class="text-muted">Accede a la API REST con JWT</p>
+    </div>
+    
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="userName" class="form-label">Usuario</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="userName"
+          formControlName="userName"
+          [class.is-invalid]="submitted && f['userName'].errors"
+          placeholder="Ingresa tu usuario">
+        <div class="invalid-feedback" *ngIf="submitted && f['userName'].errors">
+          <div *ngIf="f['userName'].errors['required']">El usuario es requerido</div>
+        </div>
+      </div>
+      
+      <div class="mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+        <input 
+          type="password" 
+          class="form-control" 
+          id="password"
+          formControlName="password"
+          [class.is-invalid]="submitted && f['password'].errors"
+          placeholder="Ingresa tu contraseña">
+        <div class="invalid-feedback" *ngIf="submitted && f['password'].errors">
+          <div *ngIf="f['password'].errors['required']">La contraseña es requerida</div>
+        </div>
+      </div>
+      
+      <div class="alert alert-danger" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+      
+      <div class="d-grid">
+        <button 
+          type="submit" 
+          class="btn btn-custom btn-lg"
+          [disabled]="loading">
+          <span class="spinner-border spinner-border-sm me-2" *ngIf="loading"></span>
+          {{ loading ? 'Iniciando sesión...' : 'Iniciar Sesión' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

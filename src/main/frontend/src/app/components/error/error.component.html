@@ -1,0 +1,44 @@
+<div class="container-fluid">
+  <div class="error-container">
+    <div class="text-center">
+      <div class="error-icon mb-4">
+        <i class="fas fa-lock fa-5x text-danger"></i>
+      </div>
+      
+      <h2 class="text-danger mb-3">Acceso Denegado</h2>
+      
+      <div class="alert alert-danger" role="alert">
+        <h5 class="alert-heading">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          Sin Permisos de Acceso
+        </h5>
+        <p class="mb-0">
+          No tienes los permisos necesarios para acceder a esta sección.
+          Por favor, inicia sesión con credenciales válidas.
+        </p>
+      </div>
+      
+      <div class="error-details mb-4">
+        <p class="text-muted">
+          <strong>Posibles causas:</strong>
+        </p>
+        <ul class="list-unstyled text-muted">
+          <li><i class="fas fa-circle fa-xs me-2"></i>Tu sesión ha expirado</li>
+          <li><i class="fas fa-circle fa-xs me-2"></i>No has iniciado sesión</li>
+          <li><i class="fas fa-circle fa-xs me-2"></i>Token JWT inválido o corrupto</li>
+          <li><i class="fas fa-circle fa-xs me-2"></i>Credenciales incorrectas</li>
+        </ul>
+      </div>
+      
+      <div class="error-actions">
+        <button 
+          type="button" 
+          class="btn btn-custom btn-lg px-4"
+          (click)="goToLogin()">
+          <i class="fas fa-sign-in-alt me-2"></i>
+          Ir a Iniciar Sesión
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
